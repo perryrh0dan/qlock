@@ -5,7 +5,6 @@ import Adafruit_GPIO.SPI as SPI
 
 
 class Controller():
-
     def __init__(self):
         self.PIXEL_COUNT = 114
 
