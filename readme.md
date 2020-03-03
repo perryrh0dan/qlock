@@ -68,6 +68,10 @@ Color of the LEDs.
 
 Special Dates like birthdays can be configured here. The clock will write the given text at this date to the screen.
 
+<div align="center">
+  <img alt="cover" width="70%" src="media/birthday.gif" />
+</div>
+
 ## Images
 
 <div align="center">
