@@ -2,10 +2,10 @@ from flask import Flask, request
 from waitress import serve
 import json
 
-from src.config import Config
+from config.config import Config
 
 # Starting Flask webapp to configure word clock
-def webApp():
+def runApp():
     app = Flask(__name__)
     
     @app.route('/config', methods=['GET'])

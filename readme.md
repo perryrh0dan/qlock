@@ -110,6 +110,11 @@ Special Dates like birthdays can be configured here. The clock will write the gi
 
 For local development on a non raspberry pi system you have to comment out the controller import. Because the GPIO packages are only available on a raspberry pi.
 
+### Unittests
+``` bash
+python -m unittest -v
+```
+
 ## Team
 
 - Thomas Pöhlmann [(@perryrh0dan)](https://github.com/perryrh0dan)

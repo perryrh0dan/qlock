@@ -4,15 +4,15 @@ import os
 import json
 import threading
 
-from src import utils
-from src.web import webApp
-from src.config import Config
+from utils import utils
+from web.web import runApp
+from config.config import Config
 
 # Depending on the mode import controller
 if Config.instance().get()['environment'] == "dev":
     from tests import controller as ct
 elif Config.instance().get()['environment'] == "prod":
-    from src import controller as ct
+    from controller import controller as ct
 
 ctrl = ct.Controller()
 
@@ -46,7 +46,7 @@ def tick(led):
     return led
 
 if __name__ == "__main__":
-    t_webApp = threading.Thread(name='Web App', target=webApp)
+    t_webApp = threading.Thread(name='Web App', target=runApp)
     t_webApp.setDaemon(True)
     t_webApp.start()
     

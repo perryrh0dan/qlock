@@ -1,6 +1,10 @@
+# coding=utf8
+
 import re
 
 # Get actual time in text
+
+
 def timeToText(words, time):
     H = time.hour
     M = time.minute
@@ -36,7 +40,7 @@ def timeToText(words, time):
         led.append(words['MINUTES']['VIERTEL'])
         if M < 20:
             minutes = M - 15
-        else: 
+        else:
             minutes = M - 45
     elif 20 <= M < 25 or 40 <= M < 45:
         text += "ZWANZIG"
@@ -60,7 +64,7 @@ def timeToText(words, time):
         led.append(words['MINUTES']['FÜNF'])
         led.append(words['TEXT']['NACH'])
         led.append(words['TEXT']['HALB'])
-        minutes = M - 35 
+        minutes = M - 35
 
     # Space
     text += " "
@@ -123,18 +127,18 @@ def timeToText(words, time):
         text += "ZWÖLF"
         led.append(words['HOURS']['ZWÖLF'])
 
-    # Space
-    text += " "
-
     # UHR
     if M < 5:
+        # Space
+        text += " "
         text += "UHR"
         led.append(words['TEXT']['UHR'])
 
     # Space
-    text += " "
+    if minutes != 0:
+        text += " "
 
-    #Dots
+    # Dots
     if minutes == 1:
         text += "PUNKT1"
         led.append(words['MINUTES']['PUNKT1'])
@@ -148,6 +152,6 @@ def timeToText(words, time):
         text += "PUNKT4"
         led.append(words['MINUTES']['PUNKT4'])
 
-    text = re.sub(' +',' ',text)
+    text = re.sub(' +', ' ', text)
     led = [item for sublist in led for item in sublist]
     return text, led

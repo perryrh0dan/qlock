@@ -1,6 +1,5 @@
 import json
 
-
 class Singleton:
     """
     A non-thread-safe helper class to ease implementing singletons.
@@ -39,7 +38,6 @@ class Singleton:
     def __instancecheck__(self, inst):
         return isinstance(inst, self._decorated)
 
-
 @Singleton
 class Config:
     def __init__(self):
@@ -48,7 +46,7 @@ class Config:
             self.config = json.load(f)
 
         # Load words
-        with open('word.json', encoding='utf-8') as f:
+        with open('words.json', encoding='utf-8') as f:
             self.words = json.load(f)
 
     def get(self):
