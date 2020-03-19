@@ -29,8 +29,11 @@
 ## Install
 
 Run following command to install all dependencies
+
 ``` bash
 pip install -r requirements.txt
+pip install RPi.GPIO
+pip install adafruit-ws2801
 ```
 
 ## Usage
