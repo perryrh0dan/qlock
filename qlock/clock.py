@@ -7,6 +7,7 @@ import threading
 from utils import utils
 from web.web import runApp
 from config.config import Config
+from transition.matrix import matrix
 
 # Depending on the mode import controller
 if Config.instance().get()['environment'] == "dev":
@@ -34,16 +35,28 @@ def printText(text):
         time.sleep(1)
 
 # clock tick
-def tick(led):
+def tick(active_leds):
     time = datetime.datetime.now()
     words = Config.instance().getWords()
-    text, new_led = utils.timeToText(words, time)
-    if led != new_led:
-        led = new_led
-        ctrl.turn_on(led)
-        print(text)
-        print(led)
-    return led
+    text, new_leds = utils.timeToText(words, time)
+    print(text)
+    return setTime(active_leds, new_leds)
+
+def setTime(old_leds, new_leds):
+    if old_leds == new_leds:
+        return old_leds
+    new_leds = transition(old_leds, new_leds)
+
+    if old_leds == new_leds:
+        return old_leds
+        ctrl.turn_on(new_leds)
+    return new_leds
+
+def transition(old_leds, new_leds):
+    transition = Config.instance().get()['transition']
+    if transition == "matrix":
+        return matrix(ctrl, old_leds, new_leds)
+    return old_leds
 
 if __name__ == "__main__":
     t_webApp = threading.Thread(name='Web App', target=runApp)

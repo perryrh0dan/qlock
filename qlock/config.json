@@ -3,6 +3,7 @@
   "color": [255, 255, 255],
   "tick_interval": 5,
   "special_interval": 60,
+  "transition": "matrix",
   "dates": [{
     "date": "21.06",
     "text": "HAPPYBIRTHDAYPAPA"

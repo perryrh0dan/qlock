@@ -1,10 +1,8 @@
-# coding=utf8
-
 import re
 
+from config.config import Config
+
 # Get actual time in text
-
-
 def timeToText(words, time):
     H = time.hour
     M = time.minute
@@ -155,3 +153,6 @@ def timeToText(words, time):
     text = re.sub(' +', ' ', text)
     led = [item for sublist in led for item in sublist]
     return text, led
+
+def getBottomLed(led):
+    return led + 11
