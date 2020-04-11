@@ -8,7 +8,7 @@ import Adafruit_GPIO.SPI as SPI
  
  
 # Configure the count of pixels:
-PIXEL_COUNT = 96
+PIXEL_COUNT = 32
  
 # Alternatively specify a hardware SPI connection on /dev/spidev0.0:
 SPI_PORT   = 0
@@ -23,3 +23,4 @@ if __name__ == "__main__":
     for i in range(pixels.count()):
         if i % 2 == 0:
             pixels.set_pixel(i, Adafruit_WS2801.RGB_to_color( 255, 255, 255))
+    pixels.show()
