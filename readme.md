@@ -72,41 +72,41 @@ Color of the LEDs.
 Special Dates like birthdays can be configured here. The clock will write the given text at this date to the screen.
 
 <div align="center">
-  <img alt="cover" width="70%" src="media/birthday.gif" />
+  <img alt="cover" width="70%" src="media/pictures/birthday.gif" />
 </div>
 
 ## Images
 
 <div align="center">
-  <img alt="cover" width="70%" src="media/holes.jpg" />
+  <img alt="cover" width="70%" src="media/pictures/holes.jpg" />
 </div>
 
 <div align="center">
-  <img alt="cover" width="70%" src="media/first_leds.jpg" />
+  <img alt="cover" width="70%" src="media/pictures/first_leds.jpg" />
 </div>
 
 <div align="center">
-  <img alt="cover" width="70%" src="media/all_leds.jpg" />
+  <img alt="cover" width="70%" src="media/pictures/all_leds.jpg" />
 </div>
 
 <div align="center">
-  <img alt="cover" width="70%" src="media/first_light.jpg" />
+  <img alt="cover" width="70%" src="media/pictures/first_light.jpg" />
 </div>
 
 <div align="center">
-  <img alt="cover" width="70%" src="media/back_plate.jpg" />
+  <img alt="cover" width="70%" src="media/pictures/back_plate.jpg" />
 </div>
 
 <div align="center">
-  <img alt="cover" width="70%" src="media/cutting.jpg" />
+  <img alt="cover" width="70%" src="media/pictures/cutting.jpg" />
 </div>
 
 <div align="center">
-  <img alt="cover" width="70%" src="media/front_plate.jpg" />
+  <img alt="cover" width="70%" src="media/pictures/front_plate.jpg" />
 </div>
 
 <div align="center">
-  <img alt="cover" width="70%" src="media/finish.jpg" />
+  <img alt="cover" width="70%" src="media/pictures/finish.jpg" />
 </div>
 
 ## Development
