@@ -3,7 +3,6 @@ import time
 from utils import utils
 
 def matrix(ctrl, old_leds, target_leds):
-    print("matrix")
     while True:
         new_leds = []
         for led in old_leds:

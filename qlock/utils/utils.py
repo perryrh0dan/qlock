@@ -20,8 +20,8 @@ def timeToText(words, time):
         text += ""
         minutes = M
     elif 5 <= M < 10 or 55 <= M <= 59:
-        text += "FÜNF"
-        led.append(words['MINUTES']['FÜNF'])
+        text += "FUENF"
+        led.append(words['MINUTES']['FUENF'])
         if M < 10:
             minutes = M - 5
         else:
@@ -48,8 +48,8 @@ def timeToText(words, time):
         else:
             minutes = M - 40
     elif 25 <= M < 30:
-        text += "FÜNF VOR HALB"
-        led.append(words['MINUTES']['FÜNF'])
+        text += "FUENF VOR HALB"
+        led.append(words['MINUTES']['FUENF'])
         led.append(words['TEXT']['VOR'])
         led.append(words['TEXT']['HALB'])
         minutes = M - 25
@@ -58,8 +58,8 @@ def timeToText(words, time):
         led.append(words['TEXT']['HALB'])
         minutes = M - 30
     elif 35 <= M < 40:
-        text += "FÜNF NACH HALB"
-        led.append(words['MINUTES']['FÜNF'])
+        text += "FUENF NACH HALB"
+        led.append(words['MINUTES']['FUENF'])
         led.append(words['TEXT']['NACH'])
         led.append(words['TEXT']['HALB'])
         minutes = M - 35
@@ -102,7 +102,7 @@ def timeToText(words, time):
         led.append(words['HOURS']['VIER'])
     elif H == 5:
         text += "FÜNF"
-        led.append(words['HOURS']['FÜNF'])
+        led.append(words['HOURS']['FUENF'])
     elif H == 6:
         text += "SECHS"
         led.append(words['HOURS']['SECHS'])
@@ -123,7 +123,7 @@ def timeToText(words, time):
         led.append(words['HOURS']['ELF'])
     elif H == 12 or H == 0:
         text += "ZWÖLF"
-        led.append(words['HOURS']['ZWÖLF'])
+        led.append(words['HOURS']['ZWOELF'])
 
     # UHR
     if M < 5:
