@@ -6,4 +6,4 @@ class Controller():
         print(self.name + ' - Bus: ' + str(bus))
 
     def get_brightness(self):
-        return 1000
+        return 1500
