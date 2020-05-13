@@ -19,11 +19,12 @@ if Config.instance().get()['environment'] == "dev":
     from tests.controller import opt3001 as opt_ct
 elif Config.instance().get()['environment'] == "prod":
     from controller import ws2801 as led_ct
-    if Config.instance().get()['opt3001'] == True:
-        from controller import opt3001 as opt_ct
+    from controller import opt3001 as opt_ct
 
 led_ctrl = led_ct.Controller()
-opt_ctrl = opt_ct.Controller(opt_address, opt_bus)
+
+if Config.instance().get()['opt3001'] == True:
+    opt_ctrl = opt_ct.Controller(opt_address, opt_bus)
 
 # check for special dates
 
