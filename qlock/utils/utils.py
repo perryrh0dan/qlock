@@ -20,7 +20,7 @@ def timeToText(words, time):
         text += ""
         minutes = M
     elif 5 <= M < 10 or 55 <= M <= 59:
-        text += "FUENF"
+        text += "FÜNF"
         led.append(words['MINUTES']['FUENF'])
         if M < 10:
             minutes = M - 5
