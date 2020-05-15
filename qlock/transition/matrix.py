@@ -9,7 +9,7 @@ def matrix(ctrl, old_leds, target_leds):
             if led in target_leds:
                 new_leds.append(led)
                 continue
-            bLed = utils.getBottomLed(led)
+            bLed = getBottomLed(led)
             if bLed < 111:
                 new_leds.append(bLed)
         ctrl.turn_on(new_leds)
@@ -22,3 +22,6 @@ def matrix(ctrl, old_leds, target_leds):
         time.sleep(0.1)
 
     return target_leds
+
+def getBottomLed(led):
+    return led + 11

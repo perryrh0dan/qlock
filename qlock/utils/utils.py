@@ -154,5 +154,18 @@ def timeToText(words, time):
     led = [item for sublist in led for item in sublist]
     return text, led
 
-def getBottomLed(led):
-    return led + 11
+def calculate_brightness(config, brightness):
+    max_brightness_percentage = config['max_brightness_percentage']
+    min_brightness_percentage = config['min_brightness_percentage']
+    max_brightness_threshold = config['max_brightness_threshold']
+    min_brightness_threshold = config['min_brightness_threshold']
+
+    percentage = (brightness - min_brightness_threshold) / \
+        (max_brightness_threshold - min_brightness_threshold)
+
+    if percentage > 1:
+        return max_brightness_percentage
+    elif percentage < 0:
+        return min_brightness_percentage
+    else:
+        return (max_brightness_percentage - min_brightness_percentage) * percentage + min_brightness_percentage
