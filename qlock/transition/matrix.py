@@ -1,6 +1,6 @@
 import time
 
-from utils import utils
+import utils
 
 def matrix(ctrl, old_leds, target_leds):
     while True:

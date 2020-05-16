@@ -1,9 +1,7 @@
 import re
 
-from config.config import Config
-
 # Get actual time in text
-def timeToText(words, time):
+def time_to_text(words, time):
     H = time.hour
     M = time.minute
 
