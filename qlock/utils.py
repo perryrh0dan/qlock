@@ -178,7 +178,7 @@ def get_leds_xy(x, y, length, direction):
     if direction == "y":
         for i in range(length - 1):
             led = 0
-            if y + i % 2 == 0:
+            if (y + i) % 2 == 0:
                 led = leds[i] + 21 - 2 * x
             else:
                 led = leds[i] + 21 - 2 * (10 - x)

@@ -46,5 +46,8 @@ class UtilsTests(unittest.TestCase):
         leds = utils.get_leds_xy(5, 3, 5, "y")
         self.assertEqual(leds, [38, 49, 60, 71, 82])
 
+    def test_get_leds_xy5(self):
+        leds = utils.get_leds_xy(6, 3, 6, "y")
+        self.assertEqual(leds, [37, 50, 59, 72, 81, 94])
 if __name__ == "__main__":
     unittest.main()
