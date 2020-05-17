@@ -38,7 +38,7 @@ def start(ctrl, old_leds, target_leds):
         for x in range(11):
             start_x = x
             start_y = y + start[x] + length[x]
-            if start_y < length[x]:
+            if start_y < 0:
                 start_y = 0
             strip_length = length[x] + y + start[x] + 1
 
