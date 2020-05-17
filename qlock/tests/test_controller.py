@@ -16,12 +16,12 @@ leds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 colors = np.tile(np.array([0, 255, 0]), (11, 1))
 
 
-def set_pixel(self, led, color):
+def set_pixel(led, color):
     adafruit_color = Adafruit_WS2801.RGB_to_color(color[0], color[1], color[2])
     pixels.set_pixel(led, adafruit_color)
 
 
-def turn_on(self, leds, colors=[]):
+def turn_on(leds, colors=[]):
     pixels.clear()
     color = [0, 255, 0]
     if len(colors) <= 0:
