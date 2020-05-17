@@ -24,9 +24,9 @@ class Controller():
     def change_brightness(self, brightness):
         self.brightness = abs(brightness / 100)
 
-    def turn_on(self, leds, colors=None):
+    def turn_on(self, leds, colors = []):
         self.pixel.clear()
-        if colors != None:
+        if len(colors) > 0
             for led in leds:
                 self.set_pixel(led, self.color)
         else:
