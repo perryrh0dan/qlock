@@ -47,14 +47,22 @@ def start(ctrl, target_leds):
         colors = get_green_values(len(leds))
         ctrl.turn_on(leds, colors)
         time.sleep(0.5)
+    ctrl.change_color([0, 255, 0])
+    ctrl.turn_on(target_leds)
 
 
 def get_green_values(n):
     colors = np.tile(np.array([0, 255, 0]), (n, 1))
     for color in colors:
         random1 = np.random.random_sample()
-        if random1 < 0.8:
+        if random1 < 0.6:
             continue
         random2 = np.random.random_sample()
         color[1] = random2 * color[1]
     return colors
+
+def get_indices():
+    N = []
+for i in range(len(L)):
+    if L[i] in R:
+        N.append(i)
