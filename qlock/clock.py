@@ -61,7 +61,7 @@ class Clock:
 
         transition = self.config['transition']
         if transition == "matrix":
-            matrix.start(led_ctrl, self.active_leds, self.new_leds)
+            matrix.start(led_ctrl, self.new_leds)
         else:
             simple.start(led_ctrl, self.new_leds)
 

@@ -25,14 +25,15 @@ import numpy as np
 #     return target_leds
 
 
-def start(ctrl, old_leds, target_leds):
+def start(ctrl, target_leds):
     direction = 'y'
     length = np.random.randint(3, 9, 11)
     start = list(map(lambda x: -1 * (x + np.random.randint(0,5)), length))
     max_length = np.max(length)
+    active_clock_leds = []
 
     for y in range(11 + max_length):
-        leds = []
+        leds = active_clock_leds
         colors = get_green_values()
         for x in range(len(start)):
             start_x = x
@@ -40,8 +41,10 @@ def start(ctrl, old_leds, target_leds):
             strip_length = length[x]
 
             leds = leds + utils.get_leds_xy(start_x, start_y, strip_length, direction)
-        ctrl.turn_on(leds)
-        time.sleep(1)
+        active_clock_leds = list(set(leds).intersection(target_leds))
+        leds = list(dict.fromkeys(leds))
+        ctrl.turn_on(leds, colors)
+        time.sleep(0.5)
 
 
 def get_green_values():

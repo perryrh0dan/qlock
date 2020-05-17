@@ -7,7 +7,7 @@ class Controller():
     def change_brightness(self, brightness):
         print(self.name + ' - Set brightmess to : ' + str(brightness))
 
-    def turn_on(self, leds):
+    def turn_on(self, leds, colors = None):
         print(self.name + ' - Turn on leds: ' + str(leds))
 
     def turn_off(self):
