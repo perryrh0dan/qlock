@@ -30,7 +30,7 @@ def start(ctrl, old_leds, target_leds):
     length = 10
     leds = []
     for i in range(10):
-        leds.append(utils.get_leds_xy(i, 0, length, direction))
+        leds = leds + utils.get_leds_xy(i, 0, length, direction)
         ctrl.change_color([0, 255, 0])
     ctrl.turn_on(leds)
 
