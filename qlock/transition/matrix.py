@@ -42,7 +42,7 @@ def start(ctrl, word_leds, corner_leds):
             strip_length = length[x]
 
             leds = leds + utils.get_leds_xy(start_x, start_y, strip_length, direction)
-        active_clock_leds = list(set(leds).intersection(word_leds))
+        active_clock_leds = list(set(leds).intersection(word_leds)) + corner_leds
         leds = list(dict.fromkeys(leds))
         blocked_indices = get_indices(leds, active_clock_leds)
         colors = get_green_values(len(leds), blocked_indices)
