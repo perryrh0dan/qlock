@@ -36,7 +36,7 @@ def start(ctrl, old_leds, target_leds):
         leds = []
         for x in range(11):
             start_x = x
-            start_y = y 
+            start_y = y - max_length
             strip_length = length[x] - ( max_length - y )
 
             leds = leds + utils.get_leds_xy(start_x, start_y, strip_length, direction)
