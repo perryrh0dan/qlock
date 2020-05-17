@@ -27,10 +27,10 @@ import numpy as np
 
 def start(ctrl, target_leds):
     direction = 'y'
-    # length = np.random.randint(5, 9, 11)
-    length = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-    # start = list(map(lambda x: -1 * (x + np.random.randint(0, 5)), length))
-    start = [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11]
+    length = np.random.randint(5, 9, 11)
+    # length = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    start = list(map(lambda x: -1 * (x + np.random.randint(0, 5)), length))
+    # start = [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11]
     max_length = np.max(length)
     active_clock_leds = []
 
@@ -46,7 +46,7 @@ def start(ctrl, target_leds):
         leds = list(dict.fromkeys(leds))
         colors = get_green_values(len(leds))
         ctrl.turn_on(leds, colors)
-        time.sleep(5)
+        time.sleep(0.5)
 
 
 def get_green_values(n):
