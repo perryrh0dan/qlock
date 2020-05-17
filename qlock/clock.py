@@ -5,8 +5,8 @@ import json
 import threading
 
 from config import getConfig, getWords
-import utils
 from transition import matrix, simple
+import utils
 
 # Depending on the mode import controller
 if getConfig()['environment'] == "dev":
@@ -23,6 +23,7 @@ name = 'Clock'
 led_ctrl = led_ct.Controller()
 if getConfig()['opt3001'] == True:
     opt_ctrl = opt_ct.Controller(opt_address, opt_bus)
+
 
 class Clock:
     config = None
@@ -47,7 +48,7 @@ class Clock:
                 self.tick()
                 time.sleep(self.config['tick_interval'])
 
-    def tick(self): 
+    def tick(self):
         # Set new color if exists
         led_ctrl.change_color(self.config['color'])
 
@@ -63,14 +64,15 @@ class Clock:
             matrix.start(led_ctrl, self.active_leds, self.new_leds)
         else:
             simple.start(led_ctrl, self.new_leds)
-        
+
         self.active_leds = self.new_leds
 
     def check_light_sensor(self):
         # Adjust brightness
         if self.config['opt3001'] == True:
             brightness_lux = opt_ctrl.get_brightness()
-            brightness_led = utils.calculate_brightness(self.config, brightness_lux)
+            brightness_led = utils.calculate_brightness(
+                self.config, brightness_lux)
             led_ctrl.change_brightness(brightness_led)
 
     def generate_words(self):
@@ -99,7 +101,7 @@ class Clock:
             if (specialdate.date() == now.date()):
                 return date['text']
         return
-    
+
 
 if __name__ == "__main__":
     clock = Clock()

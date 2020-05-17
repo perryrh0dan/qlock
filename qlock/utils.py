@@ -1,6 +1,8 @@
 import re
 
 # Get actual time in text
+
+
 def time_to_text(words, time):
     H = time.hour
     M = time.minute
@@ -152,6 +154,7 @@ def time_to_text(words, time):
     led = [item for sublist in led for item in sublist]
     return text, led
 
+
 def calculate_brightness(config, brightness):
     max_brightness_percentage = config['max_brightness_percentage']
     min_brightness_percentage = config['min_brightness_percentage']
@@ -168,6 +171,7 @@ def calculate_brightness(config, brightness):
     else:
         return (max_brightness_percentage - min_brightness_percentage) * percentage + min_brightness_percentage
 
+
 def get_leds_xy(x, y, length, direction):
     leds = []
 
@@ -178,9 +182,9 @@ def get_leds_xy(x, y, length, direction):
     if y % 2 == 0:
         led = y * 11 + x
     else:
-        led = (y + 1) * 11 - x -1
+        led = (y + 1) * 11 - x - 1
 
-    if 0 <= led <= 109:
+    if led <= 109:
         leds.append(led)
     else:
         return leds
@@ -192,10 +196,11 @@ def get_leds_xy(x, y, length, direction):
                 led = leds[i] + 21 - 2 * x
             else:
                 led = leds[i] + 21 - 2 * (10 - x)
-            
-            if 0 <= led <= 109:
+
+            if led <= 109:
                 leds.append(led)
             else:
                 break
 
+    leds = list(filter(lambda x: x > 0, leds))
     return leds

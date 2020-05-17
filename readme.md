@@ -31,6 +31,7 @@
 Run following command to install all dependencies
 
 ``` bash
+sudo apt-get install python3-numpy
 pip install -r requirements.txt
 pip install RPi.GPIO
 pip install adafruit-ws2801
