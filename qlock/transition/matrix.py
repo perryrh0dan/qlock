@@ -31,7 +31,7 @@ def start(ctrl, target_leds):
     # length = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     start = list(map(lambda x: -1 * (x + np.random.randint(0, 5)), length))
     # start = [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11]
-    max_length = np.max(length)
+    max_length = -1 * np.min(start)
     active_clock_leds = []
 
     for y in range(11 + max_length):
