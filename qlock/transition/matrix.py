@@ -27,14 +27,13 @@ import numpy as np
 
 def start(ctrl, target_leds):
     direction = 'y'
-    length = np.random.randint(3, 9, 11)
+    length = np.random.randint(5, 9, 11)
     start = list(map(lambda x: -1 * (x + np.random.randint(0,5)), length))
     max_length = np.max(length)
     active_clock_leds = []
 
     for y in range(11 + max_length):
         leds = active_clock_leds
-        colors = get_green_values()
         for x in range(len(start)):
             start_x = x
             start_y = start[x] + y + 1
@@ -43,12 +42,13 @@ def start(ctrl, target_leds):
             leds = leds + utils.get_leds_xy(start_x, start_y, strip_length, direction)
         active_clock_leds = list(set(leds).intersection(target_leds))
         leds = list(dict.fromkeys(leds))
+        colors = get_green_values(len(leds))
         ctrl.turn_on(leds, colors)
         time.sleep(0.5)
 
 
-def get_green_values():
-    colors = np.tile(np.array([0, 255, 0]),(110,1))
+def get_green_values(n):
+    colors = np.tile(np.array([0, 255, 0]),(n,1))
     for color in colors:
         random1 = np.random.random_sample()
         if random1 < 0.8:
