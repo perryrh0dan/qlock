@@ -12,8 +12,8 @@ pixels = Adafruit_WS2801.WS2801Pixels(
 pixels.clear()
 pixels.show()
 
-leds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-colors = np.tile(np.array([0, 255, 0]), (n, 1))
+leds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+colors = np.tile(np.array([0, 255, 0]), (11, 1))
 
 turn_on(leds, colors)
 
