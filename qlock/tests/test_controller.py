@@ -3,11 +3,14 @@ import Adafruit_WS2801
 import Adafruit_GPIO.SPI as SPI
 import numpy as np
 
-# Alternatively specify a hardware SPI connection on /dev/spidev0.0:
+PIXEL_COUNT = 114
 SPI_PORT = 0
 SPI_DEVICE = 0
 pixels = Adafruit_WS2801.WS2801Pixels(
     PIXEL_COUNT, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE), gpio=GPIO)
+
+pixels.clear()
+pixels.show()
 
 leds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 colors = np.tile(np.array([0, 255, 0]), (n, 1))
