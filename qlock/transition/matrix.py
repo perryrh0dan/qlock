@@ -36,7 +36,7 @@ def start(ctrl, target_leds):
 
     for y in range(11 + max_length):
         leds = active_clock_leds
-        for x in range(len(start)):
+        for x in range(len(start)): 
             start_x = x
             start_y = start[x] + y + 1
             strip_length = length[x]
@@ -46,7 +46,7 @@ def start(ctrl, target_leds):
         leds = list(dict.fromkeys(leds))
         colors = get_green_values(len(leds))
         ctrl.turn_on(leds, colors)
-        time.sleep(0.5)
+        time.sleep(5)
 
 
 def get_green_values(n):
