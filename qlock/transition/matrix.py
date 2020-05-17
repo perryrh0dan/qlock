@@ -27,15 +27,20 @@ import numpy as np
 
 def start(ctrl, old_leds, target_leds):
     direction = 'y'
-    length = np.random.randint(4,12,11)
+    length = np.random.randint(4, 12, 11)
+    length = [ 1, 2, 3, 4, 5, 6, 7, 5, 4, 5, 8]
+    max_length = 8
 
     ctrl.change_color([0, 255, 0])
-    for y in range(10):
-        leds = []        
+    for y in range(11 + max_length):
         for x in range(11):
-            leds = leds + utils.get_leds_xy(x, y, length[x], direction)
-        time.sleep(1)
-        ctrl.turn_on(leds)
+            start_x = x
+            start_y = y 
+            strip_length = length[x] - ( max_length + y )
+
+            leds = leds + utils.get_leds_xy(start_x, start_y, strip_length, direction)
+    time.sleep(1)
+    ctrl.turn_on(leds)
 
 
 def getBottomLed(led):

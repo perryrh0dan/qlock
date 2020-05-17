@@ -1,3 +1,2 @@
 Adafruit_WS2801
 opt3001
-numpy

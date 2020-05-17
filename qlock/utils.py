@@ -170,6 +170,10 @@ def calculate_brightness(config, brightness):
 
 def get_leds_xy(x, y, length, direction):
     leds = []
+
+    if length <= 0:
+        return leds
+
     if y % 2 == 0:
         leds.append(y * 11 + x)
     else:
