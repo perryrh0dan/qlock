@@ -11,3 +11,6 @@
 
 ### Python ###
 __pycache__
+
+### Config
+qlock/config.json

@@ -28,10 +28,11 @@ import utils
 def start(ctrl, old_leds, target_leds):
     direction = 'y'
     length = 10
+    leds = []
     for i in range(10):
-        new_leds = utils.get_leds_xy(i, 0, length, direction)
+        leds.append(utils.get_leds_xy(i, 0, length, direction))
         ctrl.change_color([0, 255, 0])
-        ctrl.turn_on(new_leds)
+    ctrl.turn_on(leds)
 
 
 def getBottomLed(led):
