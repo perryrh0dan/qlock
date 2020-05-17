@@ -180,7 +180,7 @@ def get_leds_xy(x, y, length, direction):
     else:
         led = (y + 1) * 11 - x -1
 
-    if led <= 109:
+    if 0 <= led <= 109:
         leds.append(led)
     else:
         return leds
@@ -193,7 +193,7 @@ def get_leds_xy(x, y, length, direction):
             else:
                 led = leds[i] + 21 - 2 * (10 - x)
             
-            if led <= 109:
+            if 0 <= led <= 109:
                 leds.append(led)
             else:
                 break
