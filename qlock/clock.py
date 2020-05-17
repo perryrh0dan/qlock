@@ -6,7 +6,7 @@ import threading
 
 from config import getConfig, getWords
 import utils
-from transition.matrix import matrix
+from transition import matrix, simple
 
 # Depending on the mode import controller
 if getConfig()['environment'] == "dev":
@@ -60,9 +60,9 @@ class Clock:
 
         transition = self.config['transition']
         if transition == "matrix":
-            matrix(led_ctrl, self.active_leds, self.new_leds)
+            matrix.start(led_ctrl, self.active_leds, self.new_leds)
         else:
-            led_ctrl.turn_on(self.new_leds)
+            simple.start(led_ctrl, self.new_leds)
         
         self.active_leds = self.new_leds
 

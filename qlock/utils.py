@@ -167,3 +167,25 @@ def calculate_brightness(config, brightness):
         return min_brightness_percentage
     else:
         return (max_brightness_percentage - min_brightness_percentage) * percentage + min_brightness_percentage
+
+def get_leds_xy(x, y, length, direction):
+    leds = []
+    if y % 2 == 0:
+        leds.append(y * 11 + x)
+    else:
+        leds.append(y + 1 * 11 - x -1)
+
+    if direction == "y":
+        for i in range(length - 1):
+            led = 0
+            if y + i % 2 == 0:
+                led = leds[i] + 21 - 2 * x
+            else:
+                led = leds[i] + 21 - 2 * (10 - x)
+            
+            if led <= 109:
+                leds.append(led)
+            else:
+                break
+
+    return leds

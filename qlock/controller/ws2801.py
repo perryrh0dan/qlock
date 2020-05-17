@@ -38,3 +38,4 @@ class Controller():
         self.pixel.clear()
         self.pixel.show()
         self.on = False
+
