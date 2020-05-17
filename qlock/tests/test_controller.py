@@ -30,6 +30,7 @@ def turn_on(leds, colors=[]):
     else:
         for i, led in enumerate(leds):
             set_pixel(led, colors[i])
+    pixels.show()
 
 
 if __name__ == "__main__":
