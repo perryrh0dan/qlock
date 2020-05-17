@@ -174,10 +174,16 @@ def get_leds_xy(x, y, length, direction):
     if length <= 0:
         return leds
 
+    led = 0
     if y % 2 == 0:
-        leds.append(y * 11 + x)
+        led = y * 11 + x
     else:
-        leds.append((y + 1) * 11 - x -1)
+        led = (y + 1) * 11 - x -1
+
+    if led <= 109:
+        leds.append(led)
+    else:
+        return leds
 
     if direction == "y":
         for i in range(length - 1):

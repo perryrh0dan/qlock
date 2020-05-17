@@ -33,14 +33,15 @@ def start(ctrl, old_leds, target_leds):
 
     ctrl.change_color([0, 255, 0])
     for y in range(11 + max_length):
+        leds = []
         for x in range(11):
             start_x = x
             start_y = y 
-            strip_length = length[x] - ( max_length + y )
+            strip_length = length[x] - ( max_length - y )
 
             leds = leds + utils.get_leds_xy(start_x, start_y, strip_length, direction)
-    time.sleep(1)
-    ctrl.turn_on(leds)
+        time.sleep(1)
+        ctrl.turn_on(leds)
 
 
 def getBottomLed(led):
