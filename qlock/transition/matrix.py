@@ -27,8 +27,10 @@ import numpy as np
 
 def start(ctrl, target_leds):
     direction = 'y'
-    length = np.random.randint(5, 9, 11)
-    start = list(map(lambda x: -1 * (x + np.random.randint(0,5)), length))
+    # length = np.random.randint(5, 9, 11)
+    length = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    # start = list(map(lambda x: -1 * (x + np.random.randint(0, 5)), length))
+    start = [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11]
     max_length = np.max(length)
     active_clock_leds = []
 
@@ -48,7 +50,7 @@ def start(ctrl, target_leds):
 
 
 def get_green_values(n):
-    colors = np.tile(np.array([0, 255, 0]),(n,1))
+    colors = np.tile(np.array([0, 255, 0]), (n, 1))
     for color in colors:
         random1 = np.random.random_sample()
         if random1 < 0.8:

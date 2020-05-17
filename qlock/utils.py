@@ -202,5 +202,5 @@ def get_leds_xy(x, y, length, direction):
             else:
                 break
 
-    leds = list(filter(lambda x: x > 0, leds))
+    leds = list(filter(lambda x: x >= 0, leds))
     return leds
