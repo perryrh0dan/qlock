@@ -26,7 +26,7 @@ class Controller():
 
     def turn_on(self, leds, colors = []):
         self.pixel.clear()
-        if len(colors) > 0
+        if len(colors) > 0:
             for led in leds:
                 self.set_pixel(led, self.color)
         else:
