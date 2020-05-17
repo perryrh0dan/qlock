@@ -28,6 +28,7 @@ import numpy as np
 def start(ctrl, old_leds, target_leds):
     direction = 'y'
     length = np.random.randint(4, 12, 11)
+    start = [-3, -5, -4, -11, -7, -9, -8, -5, -8, -8, -8]
     length = [ 1, 2, 3, 4, 5, 6, 7, 5, 4, 5, 8]
     max_length = 8
 
@@ -36,8 +37,8 @@ def start(ctrl, old_leds, target_leds):
         leds = []
         for x in range(11):
             start_x = x
-            start_y = y - max_length + length[x]
-            strip_length = length[x] - ( max_length - y )
+            start_y = y
+            strip_length = length[x] + y + start[x] + 1
 
             leds = leds + utils.get_leds_xy(start_x, start_y, strip_length, direction)
         time.sleep(1)
