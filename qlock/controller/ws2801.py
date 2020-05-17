@@ -33,7 +33,6 @@ class Controller():
             for i, led in enumerate(leds):
                 self.set_pixel(led, colors[i])
 
-
     def set_pixel(self, led, color):
         adafruit_color = Adafruit_WS2801.RGB_to_color(
             color[0] * self.brightness, color[1] * self.brightness, color[2] * self.brightness)
