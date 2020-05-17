@@ -27,14 +27,16 @@ if getConfig()['opt3001'] == True:
 
 class Clock:
     config = None
-    active_leds = []
-    new_leds = []
+    active_word_leds = []
+    new_word_leds = []
+    active_corner_leds = []
+    new_corner_leds = []
     last_special = datetime.datetime.now()
 
     def __init__(self):
         self.config = getConfig()
         led_ctrl.change_color(self.config['color'])
-        led_ctrl.turn_on(self.new_leds)
+        led_ctrl.turn_on([])
 
     def start(self):
         while True:
@@ -56,16 +58,20 @@ class Clock:
 
         self.generate_words()
 
-        if self.active_leds == self.new_leds:
-            return
+        if self.active_word_leds != self.new_word_leds:
+            transition = self.config['transition']
+            if transition == "matrix":
+                matrix.start(led_ctrl, self.new_word_leds, self.new_corner_leds)
+            else:
+                simple.start(led_ctrl, self.new_word_leds)
 
-        transition = self.config['transition']
-        if transition == "matrix":
-            matrix.start(led_ctrl, self.new_leds)
-        else:
-            simple.start(led_ctrl, self.new_leds)
+        if self.active_corner_leds != self.new_corner_leds:
+            for led in self.new_corner_leds:
+                led_ctrl.set_pixel(led)
+            led_ctrl.pixels.show()
 
-        self.active_leds = self.new_leds
+        self.active_word_leds = self.new_word_leds
+        self.active_corner_leds = self.new_corner_leds
 
     def check_light_sensor(self):
         # Adjust brightness
@@ -78,8 +84,7 @@ class Clock:
     def generate_words(self):
         time = datetime.datetime.now()
         words = getWords()
-        text, leds = utils.time_to_text(words, time)
-        self.new_leds = leds
+        text, self.new_word_leds, self.new_corner_leds = utils.time_to_text(words, time)
         print(name + ' - ' + text)
 
     def display_special(self, text):
