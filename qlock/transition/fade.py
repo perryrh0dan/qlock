@@ -4,10 +4,10 @@ import numpy as np
 
 def start(ctrl, old_word_leds, new_word_leds):
     # Fade new words in
-    for j in range(256):
+    for j in range(256 / 2):
         ctrl.clear_pixels()
         for i in new_word_leds:
-            color = fade(ctrl.color, (j / 256))
+            color = fade(ctrl.color, (j / 256 / 2))
             ctrl.set_pixel(i, color)
         for i in old_word_leds:
             ctrl.set_pixel(i)
@@ -15,10 +15,10 @@ def start(ctrl, old_word_leds, new_word_leds):
         time.sleep(0.01)
 
     # Fade old words out
-    for j in range(256):
+    for j in range(256 / 2):
         ctrl.clear_pixels()
         for i in old_word_leds:
-            color = fade(ctrl.color, (1 - j / 256))
+            color = fade(ctrl.color, (1 - j / 256 / 2))
             ctrl.set_pixel(i, color)
         for i in new_word_leds:
             ctrl.set_pixel(i)
