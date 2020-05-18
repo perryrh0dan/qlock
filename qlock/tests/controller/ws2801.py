@@ -15,7 +15,10 @@ class Controller():
         print(self.name + ' - Turn on led: ' + str(led))
 
     def show_pixels(self):
-        print(self.name + ' - show pixels')
+        print(self.name + ' - Show pixels')
+
+    def clear_pixels(self):
+        print(self.name + ' - Clear pixels')
 
     def turn_off(self):
         print(self.name + ' - Turn off leds')

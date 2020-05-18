@@ -44,6 +44,9 @@ class Controller():
     def show_pixels(self):
         self.pixels.show()
 
+    def clear_pixels(self):
+        self.pixels.clear()
+
     def turn_off(self):
         self.pixels.clear()
         self.pixels.show()

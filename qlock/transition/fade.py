@@ -1,33 +1,41 @@
 import time
 import numpy as np
 
+
 def start(ctrl, old_word_leds, new_word_leds):
     # Fade new words in
-    led = new_word_leds + old_word_leds
-    original_colors = np.tile(np.array(ctrl.color), (len(old_word_leds), 1))
-    for i in range(10):
-        i += 1
-        color = fade(ctrl.color, (i / 10))
-        colors = np.append(np.tile(np.array(color), (len(new_word_leds), 1)), original_colors, axis = 0)
-        ctrl.set_pixels(led, colors)
-        time.sleep(0.05)
+    for j in range(256):
+        ctrl.clear_pixels()
+        for i in new_word_leds:
+            color = fade(ctrl.color, (j / 256))
+            ctrl.set_pixel(i, color)
+        for i in old_word_leds:
+            ctrl.set_pixel(i)
+        ctrl.show_pixels()
+        time.sleep(0.01)
 
     # Fade old words out
-    led = old_word_leds + new_word_leds
-    original_colors = np.tile(np.array(ctrl.color), (len(old_word_leds), 1))
-    for i in range(10):
-        i += 1
-        color = fade(ctrl.color, (1 - i/10))
-        colors = np.append(np.tile(np.array(color), (len(new_word_leds), 1)), original_colors, axis = 0)
-        ctrl.set_pixels(led, colors)
-        time.sleep(0.05)
+    for j in range(256):
+        ctrl.clear_pixels()
+        for i in old_word_leds:
+            color = fade(ctrl.color, (1 - j / 256))
+            ctrl.set_pixel(i, color)
+        for i in new_word_leds:
+            ctrl.set_pixel(i)
+        ctrl.show_pixels()
+        time.sleep(0.01)
 
     ctrl.set_pixels(new_word_leds)
 
+
 def fade(color, percent):
-    '''assumes color is rgb between (0, 0, 0) and (255, 255, 255)'''
-    color = np.array(color)
-    white = np.array([255, 255, 255])
-    vector = white-color
-    color = color + vector * percent 
-    return color.astype(int)
+    r = color[0]
+    g = color[1]
+    b = color[2]
+
+    r = int(max(0, r * percent))
+    g = int(max(0, g * percent))
+    b = int(max(0, b * percent))
+
+    color = np.array([r, g, b])
+    return color
