@@ -27,7 +27,7 @@ import numpy as np
 
 def start(ctrl, old_word_leds, new_word_leds):
     direction = 'y'
-    length = np.random.randint(5, 9, 11)
+    length = np.random.randint(5, 13, 11)
     start = list(map(lambda x: -1 * (x + np.random.randint(0, 5)), length))
     max_length = -1 * np.min(start)
 
@@ -51,7 +51,7 @@ def start(ctrl, old_word_leds, new_word_leds):
         blocked_indices = get_indices(leds, active_new_word_leds)
         colors = get_green_values(len(leds), blocked_indices)
         ctrl.turn_on(leds, colors)
-        time.sleep(0.5)
+        time.sleep(0.2)
 
 
 def get_green_values(n, blocked_indices):

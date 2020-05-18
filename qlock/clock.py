@@ -39,6 +39,10 @@ class Clock:
         led_ctrl.turn_on([])
 
     def start(self):
+        """
+        Method to start the clock
+
+        """
         while True:
             self.config = getConfig()
             text = self.is_special(datetime.datetime.now())
@@ -51,43 +55,72 @@ class Clock:
                 time.sleep(self.config['tick_interval'])
 
     def tick(self):
-        # Set new color if exists
+        """
+        Clock Tick Method
+
+        """
         led_ctrl.change_color(self.config['color'])
 
         self.check_light_sensor()
 
-        self.generate_words()
+        self.generate_leds()
 
         if self.active_word_leds != self.new_word_leds:
-            transition = self.config['transition']
-            if transition == "matrix":
-                matrix.start(led_ctrl, self.active_word_leds, self.new_word_leds)
-            else:
-                simple.start(led_ctrl, self.new_word_leds)
+            self.display_words()
 
         if self.active_corner_leds != self.new_corner_leds:
-            for led in self.new_corner_leds:
-                led_ctrl.set_pixel(led)
-            led_ctrl.pixels.show()
+            self.display_corner()
 
         self.active_word_leds = self.new_word_leds
         self.active_corner_leds = self.new_corner_leds
 
     def check_light_sensor(self):
-        # Adjust brightness
+        """ 
+        Method to check the light values and to adjust the brightness
+
+        """
         if self.config['opt3001'] == True:
             brightness_lux = opt_ctrl.get_brightness()
             brightness_led = utils.calculate_brightness(
                 self.config, brightness_lux)
             led_ctrl.change_brightness(brightness_led)
 
-    def generate_words(self):
+    def generate_leds(self):
+        """
+        Method to generate word and corner leds
+
+        """
         time = datetime.datetime.now()
         words = getWords()
-        text, self.new_word_leds, self.new_corner_leds = utils.time_to_text(words, time)
+        text, self.new_word_leds, self.new_corner_leds = utils.time_to_text(
+            words, time)
         print(name + ' - ' + text)
 
+    def display_words(self):
+        """
+        Method to display word leds
+
+        """
+        transition = self.config['transition']
+        if transition == "matrix":
+            matrix.start(led_ctrl, self.active_word_leds, self.new_word_leds)
+        else:
+            simple.start(led_ctrl, self.new_word_leds)
+
+    def display_corner(self):
+        """
+        Method to display corner leds
+
+        """
+        for led in self.new_corner_leds:
+            led_ctrl.set_pixel(led)
+        led_ctrl.pixels.show()
+
     def display_special(self, text):
+        """
+        Method to display special dates
+
+        """
         words = getWords()
         for char in text:
             print(words['SPECIAL'][char])
