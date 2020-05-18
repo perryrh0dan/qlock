@@ -24,7 +24,7 @@ class Controller():
     def change_brightness(self, brightness):
         self.brightness = abs(brightness / 100)
 
-    def turn_on(self, leds, colors = []):
+    def set_pixels(self, leds, colors = []):
         self.pixels.clear()
         if len(colors) <= 0:
             for led in leds:
@@ -40,6 +40,9 @@ class Controller():
         adafruit_color = Adafruit_WS2801.RGB_to_color(
             int(color[0] * self.brightness), int(color[1] * self.brightness), int(color[2] * self.brightness))
         self.pixels.set_pixel(led, adafruit_color)
+
+    def show_pixels(self):
+        self.pixels.show()
 
     def turn_off(self):
         self.pixels.clear()

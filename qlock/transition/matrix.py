@@ -3,28 +3,6 @@ import utils
 import numpy as np
 
 
-# def start(ctrl, old_leds, target_leds):
-#     while True:
-#         new_leds = []
-#         for led in old_leds:
-#             if led in target_leds:
-#                 new_leds.append(led)
-#                 continue
-#             bLed = getBottomLed(led)
-#             if bLed < 111:
-#                 new_leds.append(bLed)
-#         ctrl.turn_on(new_leds)
-#         old_leds = new_leds
-
-#         # Transition is finished if all leds are in target_led
-#         if all(elem in target_leds for elem in new_leds):
-#             ctrl.turn_on(target_leds)
-#             break
-#         time.sleep(0.1)
-
-#     return target_leds
-
-
 def start(ctrl, old_word_leds, new_word_leds):
     direction = 'y'
     length = np.random.randint(5, 13, 11)
@@ -36,22 +14,24 @@ def start(ctrl, old_word_leds, new_word_leds):
 
     for y in range(11 + max_length):
         leds = active_new_word_leds
-        for x in range(len(start)): 
+        for x in range(len(start)):
             start_x = x
             start_y = start[x] + y + 1
             strip_length = length[x]
 
-            leds = leds + utils.get_leds_xy(start_x, start_y, strip_length, direction)
-        
+            leds = leds + \
+                utils.get_leds_xy(start_x, start_y, strip_length, direction)
+
         active_new_word_leds = list(set(leds).intersection(new_word_leds))
-        active_old_word_leds = [x for x in active_old_word_leds if x not in leds]
+        active_old_word_leds = [
+            x for x in active_old_word_leds if x not in leds]
         leds += active_old_word_leds
 
         leds = list(dict.fromkeys(leds))
         blocked_indices = get_indices(leds, active_new_word_leds)
         colors = get_green_values(len(leds), blocked_indices)
-        ctrl.turn_on(leds, colors)
-        time.sleep(0.2)
+        ctrl.set_pixels(leds, colors)
+        time.sleep(0.05)
 
 
 def get_green_values(n, blocked_indices):

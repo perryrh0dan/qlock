@@ -5,7 +5,7 @@ import json
 import threading
 
 from config import getConfig, getWords
-from transition import matrix, simple
+from transition import simple, matrix, fade
 import utils
 
 # Depending on the mode import controller
@@ -36,7 +36,7 @@ class Clock:
     def __init__(self):
         self.config = getConfig()
         led_ctrl.change_color(self.config['color'])
-        led_ctrl.turn_on([])
+        led_ctrl.set_pixels([])
 
     def start(self):
         """
@@ -104,6 +104,8 @@ class Clock:
         transition = self.config['transition']
         if transition == "matrix":
             matrix.start(led_ctrl, self.active_word_leds, self.new_word_leds)
+        if transition == "fade":
+            fade.start(led_ctrl, self.active_word_leds, self.new_word_leds)
         else:
             simple.start(led_ctrl, self.new_word_leds)
 
@@ -114,7 +116,7 @@ class Clock:
         """
         for led in self.new_corner_leds:
             led_ctrl.set_pixel(led)
-        led_ctrl.pixels.show()
+        led_ctrl.show_pixels()
 
     def display_special(self, text):
         """
@@ -124,7 +126,7 @@ class Clock:
         words = getWords()
         for char in text:
             print(words['SPECIAL'][char])
-            led_ctrl.turn_on(words['SPECIAL'][char])
+            led_ctrl.set_pixels(words['SPECIAL'][char])
             time.sleep(1)
 
     def is_special(self, now):
