@@ -35,7 +35,7 @@ def start(ctrl, old_word_leds, new_word_leds):
     active_new_word_leds = []
 
     for y in range(11 + max_length):
-        leds = active_new_word_leds + active_old_word_leds
+        leds = active_new_word_leds
         for x in range(len(start)): 
             start_x = x
             start_y = start[x] + y + 1
@@ -45,6 +45,7 @@ def start(ctrl, old_word_leds, new_word_leds):
         
         active_new_word_leds = list(set(leds).intersection(new_word_leds))
         active_old_word_leds = [x for x in active_old_word_leds if x not in leds]
+        leds += active_old_word_leds
 
         leds = list(dict.fromkeys(leds))
         blocked_indices = get_indices(leds, active_new_word_leds)
