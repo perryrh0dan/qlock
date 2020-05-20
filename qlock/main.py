@@ -19,14 +19,16 @@ def on_message(client, userdata, msg):
             clock.resume()
             client.publish('stat/qlock/POWER', payload='ON', qos=0, retain=False)
         elif payload == 'OFF':
-            clock.pause()
+            clock.stop()
             client.publish('stat/qlock/POWER', payload='OFF', qos=0, retain=False)
     elif topic == 'cmnd/qlock/COLOR':
         config = getConfig()
-        values = payload.split(',')
+        values = list(map(int, payload.split(',')))
         config["color"] = values
         setConfig(config)
-        client.publish('stat/qlock/COLOR', payload=values.join(','), qos=0, retain=False)
+        payload = ','.join(map(str, values)) 
+        client.publish('stat/qlock/COLOR', payload=payload, qos=0, retain=False)
+        clock.refresh()
 
 
 if __name__ == "__main__":
@@ -42,4 +44,10 @@ if __name__ == "__main__":
 
         client.username_pw_set(config["mqtt"]["user"], config["mqtt"]["password"])
         client.connect(config["mqtt"]["host"], config["mqtt"]["port"], 60)
+        
+        # Send initial values
+        client.publish('stat/qlock/POWER', payload='ON', qos=0, retain=False)
+        payload = ','.join(map(str, config["color"])) 
+        client.publish('stat/qlock/COLOR', payload=payload, qos=0, retain=False)
+
         client.loop_forever()

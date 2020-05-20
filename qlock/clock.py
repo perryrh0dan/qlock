@@ -81,6 +81,11 @@ class Clock(threading.Thread):
         # Now release the lock
         self.stop_cond.release()
 
+    def refresh(self):
+        self.config = getConfig()
+        self.display_words()
+        self.display_corner()
+
     def tick(self):
         """
         Clock Tick Method
