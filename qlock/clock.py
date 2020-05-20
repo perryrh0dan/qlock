@@ -16,16 +16,16 @@ elif getConfig()['environment'] == "prod":
     from controller import ws2801 as led_ct
     from controller import opt3001 as opt_ct
 
-opt_address = 0x44
-opt_bus = 1
 name = 'Clock'
 
 led_ctrl = led_ct.Controller()
 if getConfig()['opt3001'] == True:
+    opt_address = 0x44
+    opt_bus = 1
     opt_ctrl = opt_ct.Controller(opt_address, opt_bus)
 
 
-class Clock:
+class Clock(threading.Thread):
     config = None
     active_word_leds = []
     new_word_leds = []
@@ -34,25 +34,51 @@ class Clock:
     last_special = datetime.datetime.now()
 
     def __init__(self):
+        threading.Thread.__init__(self)
+        self.paused = False
+        self.pause_cond = threading.Condition(threading.Lock())
+
         self.config = getConfig()
         led_ctrl.change_color(self.config['color'])
         led_ctrl.set_pixels([])
 
-    def start(self):
+    def run(self):
         """
-        Method to start the clock
+        Method to run the clock
 
         """
         while True:
-            self.config = getConfig()
-            text = self.is_special(datetime.datetime.now())
-            delta = datetime.datetime.now() - self.last_special
-            if (text and delta.seconds >= self.config['special_interval']):
-                self.display_special(text)
-                self.last_special = datetime.datetime.now()
-            else:
-                self.tick()
-                time.sleep(self.config['tick_interval'])
+            with self.pause_cond:
+                while self.paused:
+                    # Turn off leds when paused
+                    led_ctrl.set_pixels([])
+                    self.pause_cond.wait()
+                self.config = getConfig()
+                text = self.is_special(datetime.datetime.now())
+                delta = datetime.datetime.now() - self.last_special
+                if (text and delta.seconds >= self.config['special_interval']):
+                    self.display_special(text)
+                    self.last_special = datetime.datetime.now()
+                else:
+                    self.tick()
+                    time.sleep(self.config['tick_interval'])
+            time.sleep(5)
+
+    def pause(self):
+        print(name + ' - Paused')
+        self.paused = True
+        # If in sleep, we acquire immediately, otherwise we wait for thread
+        # to release condition. In race, worker will still see self.paused
+        # and begin waiting until it's set back to False
+        self.pause_cond.acquire()
+
+    def resume(self):
+        print(name + ' - Resumed')
+        self.paused = False
+        # Notify so thread will wake after lock released
+        self.pause_cond.notify()
+        # Now release the lock
+        self.pause_cond.release()
 
     def tick(self):
         """
@@ -141,8 +167,3 @@ class Clock:
             if (specialdate.date() == now.date()):
                 return date['text']
         return
-
-
-if __name__ == "__main__":
-    clock = Clock()
-    clock.start()
