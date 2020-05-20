@@ -2,7 +2,7 @@ import paho.mqtt.client as mqtt
 import threading
 
 from clock import Clock
-from config import getConfig
+from config import getConfig, setConfig
 
 name = 'Main'
 clock = Clock()
@@ -21,6 +21,13 @@ def on_message(client, userdata, msg):
         elif payload == 'OFF':
             clock.pause()
             client.publish('stat/qlock/POWER', payload='OFF', qos=0, retain=False)
+    elif topic == 'cmnd/qlock/COLOR':
+        config = getConfig()
+        values = payload.split(',')
+        config["color"] = values
+        setConfig(config)
+        client.publish('stat/qlock/COLOR', payload=values.join(','), qos=0, retain=False)
+
 
 if __name__ == "__main__":
     config = getConfig()

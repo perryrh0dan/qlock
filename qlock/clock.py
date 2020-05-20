@@ -35,8 +35,8 @@ class Clock(threading.Thread):
 
     def __init__(self):
         threading.Thread.__init__(self)
-        self.paused = False
-        self.pause_cond = threading.Condition(threading.Lock())
+        self.stopped = False
+        self.stop_cond = threading.Condition(threading.Lock())
 
         self.config = getConfig()
         led_ctrl.change_color(self.config['color'])
@@ -48,11 +48,9 @@ class Clock(threading.Thread):
 
         """
         while True:
-            with self.pause_cond:
-                while self.paused:
-                    # Turn off leds when paused
-                    led_ctrl.clear_pixels()
-                    self.pause_cond.wait()
+            with self.stop_cond:
+                while self.stopped:
+                    self.stop_cond.wait()
                 self.config = getConfig()
                 text = self.is_special(datetime.datetime.now())
                 delta = datetime.datetime.now() - self.last_special
@@ -64,21 +62,24 @@ class Clock(threading.Thread):
                     time.sleep(self.config['tick_interval'])
             time.sleep(5)
 
-    def pause(self):
-        print(name + ' - Paused')
-        self.paused = True
+    def stop(self):
+        print(name + ' - Stopped')
+        self.stopped = True
         # If in sleep, we acquire immediately, otherwise we wait for thread
-        # to release condition. In race, worker will still see self.paused
+        # to release condition. In race, worker will still see self.stopd
         # and begin waiting until it's set back to False
-        self.pause_cond.acquire()
+        self.stop_cond.acquire()
+        led_ctrl.turn_off()
+        self.active_word_leds = []
+        self.active_corner_leds = []
 
     def resume(self):
         print(name + ' - Resumed')
-        self.paused = False
+        self.stopped = False
         # Notify so thread will wake after lock released
-        self.pause_cond.notify()
+        self.stop_cond.notify()
         # Now release the lock
-        self.pause_cond.release()
+        self.stop_cond.release()
 
     def tick(self):
         """
