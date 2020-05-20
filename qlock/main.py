@@ -22,6 +22,7 @@ def on_message(client, userdata, msg):
             clock.stop()
             client.publish('stat/qlock/POWER', payload='OFF', qos=0, retain=False)
     elif topic == 'cmnd/qlock/COLOR':
+        clock.pause()
         config = getConfig()
         values = list(map(int, payload.split(',')))
         config["color"] = values
@@ -29,6 +30,15 @@ def on_message(client, userdata, msg):
         payload = ','.join(map(str, values)) 
         client.publish('stat/qlock/COLOR', payload=payload, qos=0, retain=False)
         clock.refresh()
+        clock.resume()
+    elif topic == 'cmnd/qlock/TRANSITION':
+        clock.pause()
+        config = getConfig()
+        config["transition"] = payload
+        setConfig(config)
+        client.publish('stat/qlock/TRANSITION', payload=payload, qos=0, retain=False)
+        clock.refresh()
+        clock.resume()
 
 
 if __name__ == "__main__":
@@ -49,5 +59,6 @@ if __name__ == "__main__":
         client.publish('stat/qlock/POWER', payload='ON', qos=0, retain=False)
         payload = ','.join(map(str, config["color"])) 
         client.publish('stat/qlock/COLOR', payload=payload, qos=0, retain=False)
+        client.publish('stat/qlock/TRANSITION', payload=config["transition"], qos=0, retain=False)
 
         client.loop_forever()

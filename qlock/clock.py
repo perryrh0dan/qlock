@@ -26,21 +26,15 @@ if getConfig()['opt3001'] == True:
 
 
 class Clock(threading.Thread):
-    config = None
-    active_word_leds = []
     new_word_leds = []
-    active_corner_leds = []
     new_corner_leds = []
-    last_special = datetime.datetime.now()
 
     def __init__(self):
         threading.Thread.__init__(self)
         self.stopped = False
         self.stop_cond = threading.Condition(threading.Lock())
 
-        self.config = getConfig()
-        led_ctrl.change_color(self.config['color'])
-        led_ctrl.clear_pixels()
+        self.refresh()
 
     def run(self):
         """
@@ -73,6 +67,11 @@ class Clock(threading.Thread):
         self.active_word_leds = []
         self.active_corner_leds = []
 
+    def pause(self):
+        print(name + ' - Paused')
+        self.stopped = True
+        self.stop_cond.acquire()
+
     def resume(self):
         print(name + ' - Resumed')
         self.stopped = False
@@ -82,9 +81,19 @@ class Clock(threading.Thread):
         self.stop_cond.release()
 
     def refresh(self):
+        print(name + ' - Refresh')
         self.config = getConfig()
+
+        self.active_word_leds = []
+        self.active_corner_leds = []
+        self.last_special = datetime.datetime(1970, 1, 1)
+        led_ctrl.change_color(self.config['color'])
+
         self.display_words()
         self.display_corner()
+
+        self.active_word_leds = self.new_word_leds
+        self.active_corner_leds = self.new_corner_leds
 
     def tick(self):
         """
