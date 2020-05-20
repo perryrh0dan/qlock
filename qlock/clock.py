@@ -40,7 +40,7 @@ class Clock(threading.Thread):
 
         self.config = getConfig()
         led_ctrl.change_color(self.config['color'])
-        led_ctrl.set_pixels([])
+        led_ctrl.clear_pixels()
 
     def run(self):
         """
@@ -51,7 +51,7 @@ class Clock(threading.Thread):
             with self.pause_cond:
                 while self.paused:
                     # Turn off leds when paused
-                    led_ctrl.set_pixels([])
+                    led_ctrl.clear_pixels()
                     self.pause_cond.wait()
                 self.config = getConfig()
                 text = self.is_special(datetime.datetime.now())

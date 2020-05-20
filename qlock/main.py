@@ -8,9 +8,7 @@ name = 'Main'
 clock = Clock()
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
     client.subscribe("cmnd/qlock/#")
-    client.subscribe("stat/qlock/#")
 
 
 def on_message(client, userdata, msg):
@@ -23,8 +21,6 @@ def on_message(client, userdata, msg):
         elif payload == 'OFF':
             clock.pause()
             client.publish('stat/qlock/POWER', payload='OFF', qos=0, retain=False)
-    elif topic == 'stat/qlock/POWER':
-        print(msg)
 
 if __name__ == "__main__":
     config = getConfig()
