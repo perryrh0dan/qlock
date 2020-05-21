@@ -35,7 +35,7 @@ class Clock(threading.Thread):
         self.stopped = False
         self.stop_cond = threading.Condition(threading.Lock())
 
-        self.refresh()
+        self.clear()
 
     def run(self):
         """
@@ -80,16 +80,23 @@ class Clock(threading.Thread):
         # Now release the lock
         self.stop_cond.release()
 
-    def refresh(self):
-        print(name + ' - Refresh')
+    def clear(self):
+        print(name + ' - Clear')
         self.config = getConfig()
 
         self.active_word_leds = []
         self.active_corner_leds = []
         self.last_special = datetime.datetime(1970, 1, 1)
         led_ctrl.change_color(self.config['color'])
-
         led_ctrl.turn_off()
+
+
+    def refresh(self):
+        print(name + ' - Refresh')
+        self.clear()
+
+        self.display_words()
+        self.display_corner()
 
         self.active_word_leds = self.new_word_leds
         self.active_corner_leds = self.new_corner_leds
