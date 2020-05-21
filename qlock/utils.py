@@ -89,7 +89,7 @@ def time_to_text(words, time):
     if H == 1 and M >= 5:
         text += "EINS"
         word_leds.append(words['HOURS']['EINS'])
-    if H == 1 and M < 5:
+    elif H == 1 and M < 5:
         text += "EIN"
         word_leds.append(words['HOURS']['EIN'])
     elif H == 2:

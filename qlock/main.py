@@ -40,6 +40,10 @@ def on_message(client, userdata, msg):
         clock.refresh()
         clock.resume()
 
+def on_disconnect(client, userdata, rc):
+    if rc != 0:
+        print("Unexpected MQTT disconnection. Will auto-reconnect")
+
 
 if __name__ == "__main__":
     config = getConfig()
@@ -51,6 +55,7 @@ if __name__ == "__main__":
         client = mqtt.Client()
         client.on_connect = on_connect
         client.on_message = on_message
+        client.on_disconnect = on_disconnect
 
         client.username_pw_set(config["mqtt"]["user"], config["mqtt"]["password"])
         client.connect(config["mqtt"]["host"], config["mqtt"]["port"], 60)

@@ -1,3 +1,5 @@
+verbose = False
+
 class Controller():
     name = 'WS2801'
     color = [0, 255, 0]
@@ -9,16 +11,20 @@ class Controller():
         print(self.name + ' - Set brightmess to : ' + str(brightness))
 
     def set_pixels(self, leds, colors=[]):
-        print(self.name + ' - Turn on leds: ' + str(leds))
+        if verbose:
+            print(self.name + ' - Turn on leds: ' + str(leds))
 
     def set_pixel(self, led, color=[]):
-        print(self.name + ' - Turn on led: ' + str(led))
+        if verbose:
+            print(self.name + ' - Turn on led: ' + str(led))
 
     def show_pixels(self):
-        print(self.name + ' - Show pixels')
+        if verbose:
+            print(self.name + ' - Show pixels')
 
     def clear_pixels(self):
-        print(self.name + ' - Clear pixels')
+        if verbose:
+            print(self.name + ' - Clear pixels')
 
     def turn_off(self):
         print(self.name + ' - Turn off leds')

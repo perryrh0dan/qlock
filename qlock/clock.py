@@ -7,6 +7,7 @@ import threading
 from config import getConfig, getWords
 from transition import simple, matrix, fade
 import utils
+from timing import timing
 
 # Depending on the mode import controller
 if getConfig()['environment'] == "dev":
@@ -53,8 +54,7 @@ class Clock(threading.Thread):
                     self.last_special = datetime.datetime.now()
                 else:
                     self.tick()
-                    time.sleep(self.config['tick_interval'])
-            time.sleep(5)
+            time.sleep(self.config['tick_interval'])
 
     def stop(self):
         print(name + ' - Stopped')
@@ -89,8 +89,7 @@ class Clock(threading.Thread):
         self.last_special = datetime.datetime(1970, 1, 1)
         led_ctrl.change_color(self.config['color'])
 
-        self.display_words()
-        self.display_corner()
+        led_ctrl.turn_off()
 
         self.active_word_leds = self.new_word_leds
         self.active_corner_leds = self.new_corner_leds
