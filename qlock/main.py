@@ -54,10 +54,12 @@ def on_disconnect(client, userdata, rc):
 if __name__ == "__main__":
     config = getConfig()
 
+    print(name + ' - Start clock in new thread')
     thread = threading.Thread(target=clock.run)
     thread.start()
 
-    if config["mqtt"]["active"]:
+    if config["mqtt"]["active"] == True:
+        print(name + ' - Start mqtt client')
         client = mqtt.Client()
         client.on_connect = on_connect
         client.on_message = on_message
@@ -68,11 +70,11 @@ if __name__ == "__main__":
         client.connect(config["mqtt"]["host"], config["mqtt"]["port"], 60)
 
         # Send initial values
-        client.publish('stat/' + config['mqtt']['topic'] + '/POWER', payload='ON', qos=0, retain=False)
+        topic = 'stat/' + config['mqtt']['topic'] + '/POWER'
+        client.publish(topic, payload='ON', qos=0, retain=False)
+        topic = 'stat/' + config['mqtt']['topic'] + '/COLOR'
         payload = ','.join(map(str, config["color"]))
-        client.publish('stat/' + config['mqtt']['topic'] + '/COLOR', payload=payload,
-                       qos=0, retain=False)
-        client.publish('stat/' + config['mqtt']['topic'] + '/TRANSITION',
-                       payload=config["transition"], qos=0, retain=False)
-
+        client.publish(topic, payload=payload, qos=0, retain=False)
+        topic = 'stat/' + config['mqtt']['topic'] + '/TRANSITION'
+        client.publish(topic, payload=config["transition"], qos=0, retain=False)
         client.loop_forever()
