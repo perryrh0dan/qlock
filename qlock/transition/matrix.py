@@ -29,13 +29,13 @@ def start(ctrl, old_word_leds, new_word_leds):
 
         leds = list(dict.fromkeys(leds))
         blocked_indices = get_indices(leds, active_new_word_leds)
-        colors = get_green_values(len(leds), blocked_indices)
+        colors = get_color_values(ctrl.color, len(leds), blocked_indices)
         ctrl.set_pixels(leds, colors)
         time.sleep(0.05)
 
 
-def get_green_values(n, blocked_indices):
-    colors = np.tile(np.array([0, 255, 0]), (n, 1))
+def get_color_values(default, n, blocked_indices):
+    colors = np.tile(np.array(default), (n, 1))
     for i in range(len(colors)):
         if i in blocked_indices:
             continue
@@ -43,8 +43,14 @@ def get_green_values(n, blocked_indices):
         if random1 < 0.6:
             continue
         random2 = np.random.random_sample()
-        colors[i][1] = random2 * colors[i][1]
+        colors[i] = get_color(colors[i], random2)
     return colors
+
+def get_color(color, saturation):
+    color = np.array(color)
+    white = np.array([255,255,255])
+    vector = white - color
+    return color + vector * saturation
 
 
 def get_indices(full, part):

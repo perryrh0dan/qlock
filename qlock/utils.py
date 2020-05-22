@@ -158,10 +158,10 @@ def time_to_text(words, time):
 
 
 def calculate_brightness(config, brightness):
-    max_brightness_percentage = config['max_brightness_percentage']
-    min_brightness_percentage = config['min_brightness_percentage']
-    max_brightness_threshold = config['max_brightness_threshold']
-    min_brightness_threshold = config['min_brightness_threshold']
+    max_brightness_percentage = config['opt3001']['max_brightness_percentage']
+    min_brightness_percentage = config['opt3001']['min_brightness_percentage']
+    max_brightness_threshold = config['opt3001']['max_brightness_threshold']
+    min_brightness_threshold = config['opt3001']['min_brightness_threshold']
 
     percentage = (brightness - min_brightness_threshold) / \
         (max_brightness_threshold - min_brightness_threshold)

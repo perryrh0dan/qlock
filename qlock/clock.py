@@ -20,9 +20,15 @@ elif getConfig()['environment'] == "prod":
 name = 'Clock'
 
 led_ctrl = led_ct.Controller()
-if getConfig()['opt3001'] == True:
-    opt_address = 0x44
-    opt_bus = 1
+config = getConfig()
+if config['opt3001']['active'] == True:
+    # Get string address
+    opt_address = config['opt3001']['address']
+    # Convert to integer
+    opt_address = int(opt_address, 16)
+    # Convert to hey
+    opt_address = hex(opt_address)
+    opt_bus = config['opt3001']['bus']
     opt_ctrl = opt_ct.Controller(opt_address, opt_bus)
 
 

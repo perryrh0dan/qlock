@@ -3,7 +3,7 @@
 </h1>
 
 <h4 align="center">
-  Word clock powered by raspberrypi and python
+  Word clock powered by raspberrypi and python with mqtt support
 </h4>
 
 <div align="center">
@@ -13,6 +13,8 @@
 ## Description
 
 ## Highlights
+- Multiple Transitions (simple, fade, matrix)
+- MQTT support 
 
 ## Contents
 
@@ -45,25 +47,76 @@ to configure qlock modify the config.json in the root directory. The following i
 
 ``` json
 {
-    "color": [255, 255, 255],
-    "dates": [{
-        "date": "21.06",
-        "text": "HAPPYBIRTHDAYPAPA"
-    }, {
-        "date": "19.04",
-        "text": "HAPPYBIRTHDAYMAMA"
-    }]
+  "environment": "prod",
+  "tick_interval": 5,
+  "color": [255, 255, 255],
+  "transition": "fade",
+  "mqtt": {
+    "active": true,
+    "host": "192.168.0.2",
+    "port": 1883,
+    "user": "",
+    "password": "",
+    "topic": "qlock"
+  },
+  "opt3001": {
+    "active": true,
+    "address": "0x44",
+    "bus": 1,
+    "max_brightness_percentage": 100,
+    "min_brightness_percentage": 30,
+    "max_brightness_threshold": 2000,
+    "min_brightness_threshold": 500,
+  },
+  "special_interval": 60,
+  "dates": [{
+    "date": "21.06",
+    "text": "HAPPYBIRTHDAYPAPA"
+  }, {
+    "date": "27.09",
+    "text": "HAPPYBIRTHDAYMAMA"
+  }]
 }
 ```
 
 ### In Detail
 
-#### color
+#### environment
 
 - Type: String
-- Default: [255, 255, 255]
+- Values: `dev`,`prod`
+
+#### tick_interval
+
+- Type: Int
+- Unit: Seconds
+
+Time between clock ticks in seconds
+
+#### color
+
+- Type: Array
 
 Color of the LEDs.
+
+#### transition
+
+- Type: String
+- Values: `simple`,`fade`,`matrix`
+
+Transition between different words
+
+#### mqtt
+
+- Type: Object
+
+MQTT related settings
+
+#### opt3001
+
+- Type: Object
+
+Opt3001(Lightsensor) related settings
 
 #### dates
 
