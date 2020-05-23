@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
     print(name + ' - Start clock in new thread')
     thread = threading.Thread(target=clock.run)
-    thread.start()
+    thread.run()
 
     if config["mqtt"]["active"] == True:
         print(name + ' - Start mqtt client')

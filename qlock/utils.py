@@ -215,8 +215,8 @@ def get_xy_led(led):
     rest = led % 11
 
     if y % 2 == 0:
-        x = rest - 1
+        x = rest - 1 if rest > 0 else 10
     else:
-        x = 11 - rest
+        x = 11 - rest if rest > 0 else 0
 
     return (x,y)

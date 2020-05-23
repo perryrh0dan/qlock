@@ -74,5 +74,10 @@ class UtilsTests(unittest.TestCase):
         x,y = utils.get_xy_led(99)
         self.assertEqual(x, 10)
         self.assertEqual(y, 9)
+        
+    def test_get_xy_led6(self):
+        x,y = utils.get_xy_led(10)
+        self.assertEqual(x, 10)
+        self.assertEqual(y, 0)
 if __name__ == "__main__":
     unittest.main()
