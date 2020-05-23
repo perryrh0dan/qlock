@@ -10,14 +10,13 @@ class Controller():
 
         self.SPI_PORT = 0
         self.SPI_DEVICE = 0
-        self.pixel = Adafruit_WS2801.WS2801Pixels(
+        self.pixels = Adafruit_WS2801.WS2801Pixels(
             self.PIXEL_COUNT, spi=SPI.SpiDev(self.SPI_PORT, self.SPI_DEVICE), gpio=GPIO)
 
         self.color = [255, 255, 255]
         self.brightness = 1
-        self.pixel.clear()
-        self.pixel.show()
-        self.on = False
+        self.pixels.clear()
+        self.pixels.show()
 
     def change_color(self, color):
         self.color = color
@@ -25,16 +24,29 @@ class Controller():
     def change_brightness(self, brightness):
         self.brightness = abs(brightness / 100)
 
-    def turn_on(self, leds):
-        self.pixel.clear()
-        for led in leds:
-            color = Adafruit_WS2801.RGB_to_color(
-                self.color[0] * self.brightness, self.color[1] * self.brightness, self.color[2] * self.brightness)
-            self.pixel.set_pixel(led, color)
-        self.pixel.show()
-        self.on = True
+    def set_pixels(self, leds, colors = []):
+        self.pixels.clear()
+        if len(colors) <= 0:
+            for led in leds:
+                self.set_pixel(led, self.color)
+        else:
+            for i, led in enumerate(leds):
+                self.set_pixel(led, colors[i])
+        self.pixels.show()
+
+    def set_pixel(self, led, color = []):
+        if len(color) <= 0:
+            color = self.color
+        adafruit_color = Adafruit_WS2801.RGB_to_color(
+            int(color[0] * self.brightness), int(color[1] * self.brightness), int(color[2] * self.brightness))
+        self.pixels.set_pixel(led, adafruit_color)
+
+    def show_pixels(self):
+        self.pixels.show()
+
+    def clear_pixels(self):
+        self.pixels.clear()
 
     def turn_off(self):
-        self.pixel.clear()
-        self.pixel.show()
-        self.on = False
+        self.pixels.clear()
+        self.pixels.show()
