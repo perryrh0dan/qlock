@@ -159,7 +159,7 @@ class Clock(threading.Thread):
             matrix.start(led_ctrl, self.active_word_leds, self.new_word_leds)
         elif transition == "fade":
             fade.start(led_ctrl, self.active_word_leds, self.new_word_leds)
-        elif transition == "drop"
+        elif transition == "drop":
             drop.start(led_ctrl, self.active_word_leds, self.new_word_leds)
         else:
             simple.start(led_ctrl, self.new_word_leds)
