@@ -49,5 +49,30 @@ class UtilsTests(unittest.TestCase):
     def test_get_leds_xy5(self):
         leds = utils.get_leds_xy(6, 3, 6, "y")
         self.assertEqual(leds, [37, 50, 59, 72, 81, 94])
+
+    def test_get_xy_led1(self):
+        x,y = utils.get_xy_led(11)
+        self.assertEqual(x, 10)
+        self.assertEqual(y, 1)
+
+    def test_get_xy_led2(self):
+        x,y = utils.get_xy_led(12)
+        self.assertEqual(x, 9)
+        self.assertEqual(y, 1)
+
+    def test_get_xy_led3(self):
+        x,y = utils.get_xy_led(22)
+        self.assertEqual(x, 0)
+        self.assertEqual(y, 2)
+
+    def test_get_xy_led4(self):
+        x,y = utils.get_xy_led(69)
+        self.assertEqual(x, 3)
+        self.assertEqual(y, 6)
+
+    def test_get_xy_led5(self):
+        x,y = utils.get_xy_led(99)
+        self.assertEqual(x, 10)
+        self.assertEqual(y, 9)
 if __name__ == "__main__":
     unittest.main()

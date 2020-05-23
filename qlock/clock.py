@@ -5,7 +5,7 @@ import json
 import threading
 
 from config import getConfig, getWords
-from transition import simple, matrix, fade
+from transition import simple, matrix, fade, drop
 import utils
 from timing import timing
 
@@ -157,8 +157,10 @@ class Clock(threading.Thread):
         transition = self.config['transition']
         if transition == "matrix":
             matrix.start(led_ctrl, self.active_word_leds, self.new_word_leds)
-        if transition == "fade":
+        elif transition == "fade":
             fade.start(led_ctrl, self.active_word_leds, self.new_word_leds)
+        elif transition == "drop"
+            drop.start(led_ctrl, self.active_word_leds, self.new_word_leds)
         else:
             simple.start(led_ctrl, self.new_word_leds)
 

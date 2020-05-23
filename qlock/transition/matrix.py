@@ -1,7 +1,7 @@
 import time
-import utils
 import numpy as np
 
+import utils
 
 def start(ctrl, old_word_leds, new_word_leds):
     direction = 'y'
