@@ -26,7 +26,7 @@ if config['opt3001']['active'] == True:
     opt_address = config['opt3001']['address']
     # Convert to integer
     opt_address = int(opt_address, 16)
-    # Convert to hey
+    # Convert to hex
     opt_address = hex(opt_address)
     opt_bus = config['opt3001']['bus']
     opt_ctrl = opt_ct.Controller(opt_address, opt_bus)
