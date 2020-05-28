@@ -7,7 +7,7 @@
 </h4>
 
 <div align="center">
-  <img alt="cover" width="70%" src="media/title.jpg" />
+  <img alt="cover" width="70%" src="media/pictures/title.jpg" />
 </div>
 
 ## Description
