@@ -9,6 +9,7 @@ clock = Clock()
 
 
 def on_connect(client, userdata, flags, rc):
+    print(name + ' - Successful connected to mqtt client')
     config = getConfig()
     client.subscribe('cmnd/' + config['mqtt']['topic'] + '/#')
 
@@ -64,6 +65,8 @@ if __name__ == "__main__":
         client.on_connect = on_connect
         client.on_message = on_message
         client.on_disconnect = on_disconnect
+
+        client.reconnect_delay_set(min_delay=1, max_delay=120)
 
         client.username_pw_set(
             config["mqtt"]["user"], config["mqtt"]["password"])
