@@ -17,6 +17,9 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     topic = msg.topic
     payload = msg.payload.decode('utf-8')
+
+    print(name + ' - Received topic: ' + topic + ' with payload: ' + payload)
+
     config = getConfig()
     if topic == 'cmnd/' + config['mqtt']['topic'] + '/POWER':
         if payload == 'ON':
