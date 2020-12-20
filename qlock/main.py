@@ -31,21 +31,37 @@ def on_message(client, userdata, msg):
             client.publish('stat/' + config['mqtt']['topic'] + '/POWER', payload='OFF',
                            qos=0, retain=False)
     elif topic == 'cmnd/' + config['mqtt']['topic'] + '/COLOR':
+        # Pause the qlock
         clock.pause()
-        values = list(map(int, payload.split(',')))
-        config["color"] = values
+
+        # extract the color from the payload
+        color = list(map(int, payload.split(',')))
+
+        # update the config
+        config["color"] = color
         setConfig(config)
-        payload = ','.join(map(str, values))
+
+        # send new stat via mqtt
+        payload = ','.join(map(str, color))
         client.publish('stat/' + config['mqtt']['topic'] + '/COLOR', payload=payload,
                        qos=0, retain=False)
+
+        # refresh qlock and resume
         clock.refresh()
         clock.resume()
     elif topic == 'cmnd/' + config['mqtt']['topic'] + '/TRANSITION':
+        # Pause the qlock
         clock.pause()
+
+        # extract transition from the payload and update config
         config["transition"] = payload
         setConfig(config)
+   
+        # send new state via mqtt
         client.publish('stat/' + config['mqtt']['topic'] + '/TRANSITION',
                        payload=payload, qos=0, retain=False)
+        
+        # refresh qlock and resume
         clock.refresh()
         clock.resume()
 

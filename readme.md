@@ -169,7 +169,7 @@ For local development on a non raspberry pi system you have to comment out the c
 
 ### Unittests
 ``` bash
-python -m unittest -v
+python3 -m unittest -v
 ```
 
 ## Team
