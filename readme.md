@@ -125,11 +125,19 @@ Opt3001(Lightsensor) related settings
 
 Special Dates like birthdays can be configured here. The clock will write the given text at this date to the screen.
 
+## Images
+
 <div align="center">
-  <img alt="cover" width="70%" src="media/pictures/birthday.gif" />
+  <img alt="cover" width="70%" src="media/pictures/wall_mounted_1.jpg" />
 </div>
 
-## Images
+<div align="center">
+  <img alt="cover" width="70%" src="media/pictures/wall_mounted_2.jpg" />
+</div>
+
+<div align="center">
+  <img alt="special date" width="70%" src="media/pictures/birthday.gif" />
+</div>
 
 <div align="center">
   <img alt="cover" width="70%" src="media/pictures/holes.jpg" />
