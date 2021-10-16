@@ -159,7 +159,7 @@ class Clock(threading.Thread):
             led_ctrl.set_pixels(words['TENSDIGIT'][str(tensDigit)])
             led_ctrl.set_pixels(words['SPECIAL']["+"])      
             
-            print(self.name, " - Temperatur: " + tensDigit + " " + onesDigit)
+            print(self.name, " - Temperatur: " + str(tensDigit) + " " + str(onesDigit))
 
 
     def generate_leds(self):
