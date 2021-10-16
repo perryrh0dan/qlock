@@ -48,6 +48,7 @@ class Clock(threading.Thread):
 
         self.clear()
 
+
     def run(self):
         """
         Method to run the clock
@@ -67,6 +68,7 @@ class Clock(threading.Thread):
                     self.tick()
             time.sleep(self.config['tick_interval'])
 
+
     def stop(self):
         print(name + ' - Stopped')
         self.stopped = True
@@ -78,10 +80,12 @@ class Clock(threading.Thread):
         self.active_word_leds = []
         self.active_corner_leds = []
 
+
     def pause(self):
         print(name + ' - Paused')
         self.stopped = True
         self.stop_cond.acquire()
+
 
     def resume(self):
         print(name + ' - Resumed')
@@ -90,6 +94,7 @@ class Clock(threading.Thread):
         self.stop_cond.notify()
         # Now release the lock
         self.stop_cond.release()
+
 
     def clear(self):
         print(name + ' - Clear')
@@ -133,6 +138,7 @@ class Clock(threading.Thread):
         self.active_word_leds = self.new_word_leds
         self.active_corner_leds = self.new_corner_leds
 
+
     def check_light_sensor(self):
         """ 
         Method to check the light values and to adjust the brightness
@@ -143,6 +149,9 @@ class Clock(threading.Thread):
             brightness_led = utils.calculate_brightness(
                 self.config, brightness_lux)
             led_ctrl.change_brightness(brightness_led)
+
+            print(name + " - Light: " + str(brightness_lux))
+
 
     def check_temperature_sensor(self):
         """ 
@@ -159,7 +168,7 @@ class Clock(threading.Thread):
             led_ctrl.set_pixels(words['TENSDIGIT'][str(tensDigit)])
             led_ctrl.set_pixels(words['SPECIAL']["+"])      
             
-            print(name, " - Temperatur: " + str(tensDigit) + " " + str(onesDigit))
+            print(name + " - Temperatur: " + str(tensDigit) + " " + str(onesDigit))
 
 
     def generate_leds(self):
@@ -172,6 +181,7 @@ class Clock(threading.Thread):
         text, self.new_word_leds, self.new_corner_leds = utils.time_to_text(
             words, time)
         print(name + ' - ' + text)
+
 
     def display_words(self):
         """
@@ -188,6 +198,7 @@ class Clock(threading.Thread):
         else:
             simple.start(led_ctrl, self.new_word_leds)
 
+
     def display_corner(self):
         """
         Method to display corner leds
@@ -196,6 +207,7 @@ class Clock(threading.Thread):
         for led in self.new_corner_leds:
             led_ctrl.set_pixel(led)
         led_ctrl.show_pixels()
+
 
     def display_special(self, text):
         """
@@ -207,6 +219,7 @@ class Clock(threading.Thread):
             print(words['SPECIAL'][char])
             led_ctrl.set_pixels(words['SPECIAL'][char])
             time.sleep(1)
+
 
     def is_special(self, now):
         """
