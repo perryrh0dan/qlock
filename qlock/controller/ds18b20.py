@@ -5,7 +5,7 @@ class Controller():
         self.device = device_dir + "/w1_slave" 
 
     def read_temp_raw(self):
-        f = open(self.device_dir, 'r')
+        f = open(self.device, 'r')
         lines = f.readlines()
         f.close()
         return lines
