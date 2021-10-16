@@ -18,7 +18,11 @@
     "max_brightness_percentage": 100,
     "min_brightness_percentage": 30,
     "max_brightness_threshold": 2000,
-    "min_brightness_threshold": 500,
+    "min_brightness_threshold": 500
+  },
+  "ds18b20": {
+    "active": true,
+    "device_dir": "/sys/bus/w1/devices/28-3c01d607b97f"
   },
   "special_interval": 60,
   "dates": [{

@@ -1,21 +1,20 @@
 import datetime
 import time
-import os
-import json
 import threading
 
 from config import getConfig, getWords
 from transition import simple, matrix, fade, drop
 import utils
-from timing import timing
 
 # Depending on the mode import controller
 if getConfig()['environment'] == "dev":
     from tests.controller import ws2801 as led_ct
     from tests.controller import opt3001 as opt_ct
+    from tests.controller import ds18b20 as temp_ct
 elif getConfig()['environment'] == "prod":
     from controller import ws2801 as led_ct
     from controller import opt3001 as opt_ct
+    from controller import ds18b20 as temp_ct
 
 name = 'Clock'
 
@@ -30,6 +29,11 @@ if config['opt3001']['active'] == True:
     opt_address = hex(opt_address)
     opt_bus = config['opt3001']['bus']
     opt_ctrl = opt_ct.Controller(opt_address, opt_bus)
+
+
+if config['ds18b20']['active'] == True:
+    device_dir = config['ds18b20']['device_dir']
+    temp_ctrl = temp_ct.Controller(device_dir)
 
 
 class Clock(threading.Thread):
@@ -115,6 +119,7 @@ class Clock(threading.Thread):
         led_ctrl.change_color(self.config['color'])
 
         self.check_light_sensor()
+        self.check_temperature_sensor()
 
         self.generate_leds()
 
@@ -132,11 +137,28 @@ class Clock(threading.Thread):
         Method to check the light values and to adjust the brightness
 
         """
-        if self.config['opt3001'] == True:
+        if self.config['opt3001']['active'] == True:
             brightness_lux = opt_ctrl.get_brightness()
             brightness_led = utils.calculate_brightness(
                 self.config, brightness_lux)
             led_ctrl.change_brightness(brightness_led)
+
+    def check_temperature_sensor(self):
+        """ 
+        Method to check the temperature value
+
+        """
+        if self.config['ds18b20']['active'] == True:
+            temperature = temp_ctrl.get_temp()
+            words = getWords("ds18b20")
+            tensDigit = int(temperature / 10)
+            onesDigit = int(temperature - tensDigit * 10)
+
+            led_ctrl.set_pixels(words['ONESDIGIT'][str(onesDigit)])
+            led_ctrl.set_pixels(words['TENSDIGIT'][str(tensDigit)])
+
+            print(name + ' - ' + "Temp tens digit Leds: " + ",".join(map(str, words['TENSDIGIT'][str(tensDigit)])))      
+            print(name + ' - ' + "Temp ones digit Leds: " + ",".join(map(str, words['ONESDIGIT'][str(onesDigit)])))            
 
     def generate_leds(self):
         """
