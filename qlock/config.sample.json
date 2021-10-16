@@ -1,6 +1,7 @@
 {
   "environment": "prod",
   "tick_interval": 5,
+  "pixel_count": 114,
   "color": [255, 255, 255],
   "transition": "fade",
   "mqtt": {

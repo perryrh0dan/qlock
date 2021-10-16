@@ -5,8 +5,8 @@ import Adafruit_GPIO.SPI as SPI
 
 
 class Controller():
-    def __init__(self):
-        self.PIXEL_COUNT = 114
+    def __init__(self, pixel_count):
+        self.PIXEL_COUNT = pixel_count
 
         self.SPI_PORT = 0
         self.SPI_DEVICE = 0

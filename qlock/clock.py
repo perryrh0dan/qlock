@@ -18,8 +18,9 @@ elif getConfig()['environment'] == "prod":
 
 name = 'Clock'
 
-led_ctrl = led_ct.Controller()
 config = getConfig()
+led_ctrl = led_ct.Controller(config["pixel_count"])
+
 if config['opt3001']['active'] == True:
     # Get string address
     opt_address = config['opt3001']['address']

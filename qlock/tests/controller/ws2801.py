@@ -4,6 +4,9 @@ class Controller():
     name = 'WS2801'
     color = [0, 255, 0]
 
+    def __init__(self, pixel_count):
+        print(self.name + ' - Pixel Count: ' + str(pixel_count))
+
     def change_color(self, color):
         print(self.name + ' - Change color to: ' + str(color))
 
