@@ -10,7 +10,19 @@
   <img alt="cover" width="70%" src="media/pictures/title.jpg" />
 </div>
 
-## Description
+<div align="center">
+  <a href="https://play.google.com/store/apps/details?id=dev.tpoe.wordclock&hl=en&gl=US">
+    <img alt="Play Store Watch Facer" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fplay.cuzi.workers.dev%2Fplay%3Fi%3Ddev.tpoe.wordclock%26l%3DAndroid%2520Watch%2520Face%26m%3D%24rating%2520%25E2%25AD%2590%2520">
+  </a>
+
+  <a href="https://play.google.com/store/apps/details?id=dev.tpoe.wordclock&hl=en&gl=US">
+    <img alt="Play Store Widget" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fplay.cuzi.workers.dev%2Fplay%3Fi%3Ddev.tpoe.wordclock.widget%26l%3DAndroid%2520Widget%26m%3D%24rating%2520%25E2%25AD%2590%2520">
+  </a>
+</div>
+
+## Android Watch Face and Widget
+
+The word clock is now available as a Wear OS Watch Face and as an Android widget. Check out the links above.
 
 ## Highlights
 - Multiple Transitions (simple, fade, matrix)
