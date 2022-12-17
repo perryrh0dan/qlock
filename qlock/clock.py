@@ -265,6 +265,7 @@ class Clock(threading.Thread):
 
         """
         for led in self.new_temperature_leds:
+            print(led)
             led_ctrl.set_pixel(led)
         led_ctrl.show_pixels()
 
