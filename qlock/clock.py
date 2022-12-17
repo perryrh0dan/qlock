@@ -165,7 +165,7 @@ class Clock(threading.Thread):
                 changes.append('brightness')
 
         if self.config['ds18b20']['active'] == True:
-            if self.active_temperature != self.new_temperature:
+            if self.active_temperature_leds != self.new_temperature_leds:
                 changes.append('temperature')
 
         if self.active_word_leds != self.new_word_leds:
