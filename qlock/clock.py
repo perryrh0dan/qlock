@@ -207,9 +207,9 @@ class Clock(threading.Thread):
             onesDigit = int(temperature - tensDigit * 10)
 
             leds = []
-            leds.append(words['ONESDIGIT'][str(onesDigit)])
-            leds.append(words['TENSDIGIT'][str(tensDigit)])
-            leds.append(words['SPECIAL']["+"])
+            leds.append(words['ONESDIGIT'][str(onesDigit)][0])
+            leds.append(words['TENSDIGIT'][str(tensDigit)][0])
+            leds.append(words['SPECIAL']["+"][0])
             
             print(name + " - Temperatur: " + str(tensDigit) + " " + str(onesDigit))
 
