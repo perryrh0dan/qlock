@@ -41,6 +41,11 @@ class Clock(threading.Thread):
     new_word_leds = []
     new_corner_leds = []
 
+    active_word_leds = []
+    active_corner_leds = []
+    active_brightness = 0
+    active_temperature_leds = []
+
     def __init__(self):
         threading.Thread.__init__(self)
         self.stopped = False
@@ -124,22 +129,57 @@ class Clock(threading.Thread):
         """
         led_ctrl.change_color(self.config['color'])
 
-        self.check_light_sensor()
-        self.check_temperature_sensor()
+        self.new_brightness = self.check_light_sensor()
+        self.new_temperature_leds = self.check_temperature_sensor()
 
-        self.generate_leds()
+        self.new_word_leds, self.new_corner_leds = self.generate_leds()
 
-        if self.active_word_leds != self.new_word_leds:
-            self.display_words()
+        should_update = self.shouldUpdate()
 
-        if self.active_corner_leds != self.new_corner_leds:
+        if 'brightness' in should_update:
+            self.display_words('simple')
             self.display_corner()
+            self.display_temperature()
+
+            self.active_brightness = self.new_brightness
+        else:
+            if 'words' in should_update:
+                self.display_words()
+        
+            if 'corner' in should_update:
+                self.display_corner()
+
+            if 'temperature' in should_update:
+                self.display_temperature()
 
         self.active_word_leds = self.new_word_leds
         self.active_corner_leds = self.new_corner_leds
+        self.active_temperature_leds = self.new_temperature_leds
 
 
-    def check_light_sensor(self):
+    def shouldUpdate(self):
+        changes = []
+
+        if self.config['opt3001']['active'] == True:
+            if abs(self.active_brightness - self.new_brightness) > 0.1:
+                changes.append('brightness')
+
+        if self.config['ds18b20']['active'] == True:
+            if self.active_temperature != self.new_temperature:
+                changes.append('temperature')
+
+        if self.active_word_leds != self.new_word_leds:
+            changes.append('words')
+
+        if self.active_corner_leds != self.new_corner_leds:
+            changes.append('corner')
+
+        print('should update: ')
+        print(*changes)
+
+        return changes
+
+    def check_light_sensor(self) -> int:
         """ 
         Method to check the light values and to adjust the brightness
 
@@ -151,6 +191,8 @@ class Clock(threading.Thread):
             led_ctrl.change_brightness(brightness_led)
 
             print(name + " - Light: " + str(brightness_lux))
+
+            return brightness_led
 
 
     def check_temperature_sensor(self):
@@ -164,12 +206,17 @@ class Clock(threading.Thread):
             tensDigit = int(temperature / 10)
             onesDigit = int(temperature - tensDigit * 10)
 
-            led_ctrl.set_pixels(words['ONESDIGIT'][str(onesDigit)])
-            led_ctrl.set_pixels(words['TENSDIGIT'][str(tensDigit)])
-            led_ctrl.set_pixels(words['SPECIAL']["+"])      
+            leds = []
+            leds.append(words['ONESDIGIT'][str(onesDigit)])
+            leds.append(words['TENSDIGIT'][str(tensDigit)])
+            leds.append(words['SPECIAL']["+"])
             
             print(name + " - Temperatur: " + str(tensDigit) + " " + str(onesDigit))
 
+            return leds
+        else:
+            return []
+    
 
     def generate_leds(self):
         """
@@ -178,17 +225,21 @@ class Clock(threading.Thread):
         """
         time = datetime.datetime.now()
         words = getWords()
-        text, self.new_word_leds, self.new_corner_leds = utils.time_to_text(
+        text, new_word_leds, new_corner_leds = utils.time_to_text(
             words, time)
         print(name + ' - ' + text)
 
+        return new_word_leds, new_corner_leds
 
-    def display_words(self):
+
+    def display_words(self, transition = True):
         """
         Method to display word leds
 
         """
-        transition = self.config['transition']
+        if transition:
+            transition = self.config['transition']
+
         if transition == "matrix":
             matrix.start(led_ctrl, self.active_word_leds, self.new_word_leds)
         elif transition == "fade":
@@ -208,6 +259,14 @@ class Clock(threading.Thread):
             led_ctrl.set_pixel(led)
         led_ctrl.show_pixels()
 
+    def display_temperature(self):
+        """
+        Method to display temperature leds
+
+        """
+        for led in self.new_temperature_leds:
+            led_ctrl.set_pixel(led)
+        led_ctrl.show_pixels()
 
     def display_special(self, text):
         """
